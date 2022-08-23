@@ -8,7 +8,7 @@ void Graph::printGraph() {
     std::cout << "T: " << t->getId()<< std::endl;
 }
 
-bool Graph::buildGraph() {
+void Graph::buildGraph() {
     int vertexesNum, edgesNum, sId, tId;
     std::cout << "num of vertexes:\n";
     std::cin >> vertexesNum;
@@ -19,15 +19,48 @@ bool Graph::buildGraph() {
     std::cout << "num of t:\n";
     std::cin >> tId;
 
-    this->vertexes = std::vector<Vertex>(vertexesNum);
-    for (int i = 0; i < vertexesNum; ++i)vertexes[i].setId(i + 1);
+    makeEmptyGraph(vertexesNum);
     this->s = &vertexes[sId -1];
     this->t = &vertexes[tId -1];
     int src, dest, weight;
     for(int i = 0; i< edgesNum; ++i){
         std::cin >> src >> dest >> weight;
-        vertexes[src - 1].getEdges().emplace_back(src, dest, weight);
+        addEdge(src, dest,weight);
     }
-    return true;
+}
+
+void Graph::makeEmptyGraph(int numOfVertexes) {
+    for(int i = 0; i < numOfVertexes; ++i){
+        this->vertexes.emplace_back(i + 1);
+    }
+}
+
+std::list<int> Graph::getAdjList(int vertexId) {
+    std::list<int> adjLst;
+    const std::list<Edge>& vertexNeighbours = this->vertexes[vertexId].getEdges();
+    std::for_each(vertexNeighbours.begin(), vertexNeighbours.end(), [&adjLst](const Edge& e){
+        adjLst.push_back(e.getDest());
+    });
+    return adjLst;
+}
+
+void Graph::addEdge(int src, int dest, int weight) {
+    this->vertexes[src -1].addEdge(dest,weight);
+}
+
+void Graph::removeEdge(int src, int dest) {
+    std::list<Edge>& edges = this->vertexes[src -1].getEdges();
+    auto found = (std::find_if(edges.begin(), edges.end(), [&src, &dest](const Edge& e){
+        return e.getSrc() == src && e.getDest() == dest;
+    }));
+    edges.remove(*found);
+}
+
+const Vertex& Graph::getS() const {
+    return *s;
+}
+
+const Vertex& Graph::getT() const {
+    return *t;
 }
 

@@ -14,7 +14,8 @@ private:
     std::list<Edge> edges;
 
 public:
-//    Vertex(int id, std::list<Edge>& edges): id(id), edges(edges){}
+//    Vertex(){}
+    Vertex(int id) :id(id){}
 
     int getId() const {
         return id;
@@ -25,8 +26,13 @@ public:
     }
     void setId(int id){this->id = id;}
 
+    void addEdge(int dest, int weight){
+        edges.emplace_back(this->id, dest, weight);
+    }
+
     friend std::ostream & operator<<(std::ostream& out, const Vertex& v);
 };
+
 
 
 

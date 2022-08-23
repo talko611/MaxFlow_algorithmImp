@@ -15,6 +15,24 @@ private:
     Vertex* t;
 
 public:
+    void makeEmptyGraph(int numOfVertexes);
+
+    std::list<int> getAdjList(int vertexId);
+
+    void addEdge(int src, int dest, int weight);
+
+    void removeEdge(int src, int dest);
+
+    int getVertexesSize()const{return vertexes.size();}
+
+    const Vertex& getS() const;
+
+    const Vertex& getT() const;
+
+    const Vertex& getVertexById(int id) const{
+        return vertexes[id -1];
+    }
+
     void printGraph();
-    bool buildGraph();
+    void buildGraph();
 };
