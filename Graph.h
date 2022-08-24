@@ -11,10 +11,25 @@
 class Graph{
 private:
     std::vector<Vertex> vertexes;
-    Vertex* s;
-    Vertex* t;
+    Vertex* s = nullptr;
+    Vertex* t = nullptr;
 
 public:
+    Graph(){}
+
+    Graph(const Graph& copyFrom){
+
+        this->makeEmptyGraph(copyFrom.getVertexesSize());
+
+        for(const Vertex& v : copyFrom.vertexes){
+            for(const Edge& e : v.getEdges()){
+                this->addEdge(e.getSrc(), e.getDest(), e.getCapacity());
+            }
+        }
+        this->s = &this->vertexes[copyFrom.s->getId() -1];
+        this->t = &this->vertexes[copyFrom.t->getId() -1];
+
+    }
     void makeEmptyGraph(int numOfVertexes);
 
     std::list<int> getAdjList(int vertexId);
@@ -23,7 +38,7 @@ public:
 
     void removeEdge(int src, int dest);
 
-    int getVertexesSize()const{return vertexes.size();}
+    int getVertexesSize()const{return this->vertexes.size();}
 
     const Vertex& getS() const;
 
@@ -33,6 +48,10 @@ public:
         return vertexes[id -1];
     }
 
+    std::__list_iterator<Edge, void *> getEdge(int src, int dest);
+
     void printGraph();
+
     void buildGraph();
+
 };

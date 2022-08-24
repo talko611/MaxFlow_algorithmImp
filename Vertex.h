@@ -24,6 +24,10 @@ public:
     std::list<Edge> &getEdges() {
         return edges;
     }
+    const std::list<Edge> &getEdges() const {
+        return edges;
+    }
+
     void setId(int id){this->id = id;}
 
     void addEdge(int dest, int weight){

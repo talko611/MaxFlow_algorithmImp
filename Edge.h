@@ -22,7 +22,7 @@ public:
         return destId;
     }
 
-    int getWeight() const {
+    int getCapacity() const {
         return capacity;
     }
 
