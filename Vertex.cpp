@@ -6,6 +6,8 @@
 
 std::ostream &operator<<(std::ostream &out, const Vertex &v) {
     out << "Id: " << v.id << " neighbours: ";
-    std::for_each(v.edges.begin(), v.edges.end(), [&out](const Edge& e){out << e.getDest() << " ";});
+    for(const Edge& temp : v.edges){
+        out << temp.getDest() << " ";
+    }
     return out;
 }

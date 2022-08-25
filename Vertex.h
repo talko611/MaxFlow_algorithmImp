@@ -6,6 +6,7 @@
 #include <list>
 #include <utility>
 #include <iostream>
+#include <algorithm>
 #include "Edge.h"
 
 class Vertex {

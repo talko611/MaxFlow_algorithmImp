@@ -64,9 +64,13 @@ const Vertex& Graph::getT() const {
     return *t;
 }
 
-std::__list_iterator<Edge, void *> Graph::getEdge(int src, int dest) {
+ Edge* Graph::getEdge(int src, int dest) {
     Edge e(src,dest,0);
     std::list<Edge>& refLst = this->vertexes[src -1].getEdges();
-    return std::find(refLst.begin(), refLst.end(), e);
+     auto res = std::find_if(refLst.begin(), refLst.end() ,[&src, &dest](const Edge& edge){
+         return edge.getSrc() == src && edge.getDest() == dest;
+     });
+
+    return (res == refLst.end()) ? nullptr : &(*res);
 }
 

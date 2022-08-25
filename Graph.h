@@ -4,6 +4,7 @@
 
 #pragma once
 #include <iostream>
+#include <algorithm>
 #include "Vertex.h"
 #include <vector>
 
@@ -42,13 +43,15 @@ public:
 
     const Vertex& getS() const;
 
+    Vertex& getS(){return *s;}
+
     const Vertex& getT() const;
 
     const Vertex& getVertexById(int id) const{
         return vertexes[id -1];
     }
 
-    std::__list_iterator<Edge, void *> getEdge(int src, int dest);
+    Edge* getEdge(int src, int dest);
 
     void printGraph();
 
