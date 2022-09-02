@@ -1,7 +1,3 @@
-//
-// Created by Tal Koren on 22/08/2022.
-//
-
 #pragma once
 #include <list>
 #include <utility>
@@ -15,7 +11,6 @@ private:
     std::list<Edge> edges;
 
 public:
-//    Vertex(){}
     Vertex(int id) :id(id){}
 
     int getId() const {
@@ -25,6 +20,7 @@ public:
     std::list<Edge> &getEdges() {
         return edges;
     }
+
     const std::list<Edge> &getEdges() const {
         return edges;
     }
@@ -37,7 +33,3 @@ public:
 
     friend std::ostream & operator<<(std::ostream& out, const Vertex& v);
 };
-
-
-
-

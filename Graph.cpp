@@ -10,14 +10,11 @@ void Graph::printGraph() {
 
 void Graph::buildGraph() {
     int vertexesNum, edgesNum, sId, tId;
-    std::cout << "num of vertexes:\n";
     std::cin >> vertexesNum;
-    std::cout << "num of edges:\n";
     std::cin >> edgesNum;
-    std::cout << "num of s:\n";
     std::cin >> sId;
-    std::cout << "num of t:\n";
     std::cin >> tId;
+    validateInput(vertexesNum, edgesNum, sId, tId);
 
     makeEmptyGraph(vertexesNum);
     this->s = &vertexes[sId -1];
@@ -25,8 +22,19 @@ void Graph::buildGraph() {
     int src, dest, weight;
     for(int i = 0; i< edgesNum; ++i){
         std::cin >> src >> dest >> weight;
+        if(src <= 0 || src > vertexesNum || dest <= 0 || dest > vertexesNum || weight < 0)
+            throw std::invalid_argument("invalid input");
         addEdge(src, dest,weight);
     }
+}
+
+void Graph::validateInput(int numOfVertexes, int numOfEdges, int sId, int tId) {
+    if(numOfVertexes <= 0)
+        throw std::invalid_argument("invalid input");
+    if(numOfEdges <= 0 )
+        throw std::invalid_argument("invalid input");
+    if(sId <=0 || sId > numOfVertexes || tId <= 0 || tId > numOfVertexes)
+        throw std::invalid_argument("invalid input");
 }
 
 void Graph::makeEmptyGraph(int numOfVertexes) {
@@ -53,7 +61,8 @@ void Graph::removeEdge(int src, int dest) {
     auto found = (std::find_if(edges.begin(), edges.end(), [&src, &dest](const Edge& e){
         return e.getSrc() == src && e.getDest() == dest;
     }));
-    edges.remove(*found);
+    if(found != this->vertexes[src -1].getEdges().end())
+        edges.remove(*found);
 }
 
 const Vertex& Graph::getS() const {
@@ -64,13 +73,16 @@ const Vertex& Graph::getT() const {
     return *t;
 }
 
- Edge* Graph::getEdge(int src, int dest) {
+Edge* Graph::getEdge(int src, int dest) {
     Edge e(src,dest,0);
     std::list<Edge>& refLst = this->vertexes[src -1].getEdges();
-     auto res = std::find_if(refLst.begin(), refLst.end() ,[&src, &dest](const Edge& edge){
-         return edge.getSrc() == src && edge.getDest() == dest;
-     });
+    auto res = std::find_if(refLst.begin(), refLst.end() ,[&src, &dest](const Edge& edge){
+        return edge.getSrc() == src && edge.getDest() == dest;
+    });
 
     return (res == refLst.end()) ? nullptr : &(*res);
 }
 
+std::vector<Vertex> &Graph::getVertexes()  {
+    return vertexes;
+}

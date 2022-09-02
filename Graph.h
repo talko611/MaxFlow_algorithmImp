@@ -1,17 +1,17 @@
-//
-// Created by Tal Koren on 22/08/2022.
-//
-
 #pragma once
 #include <iostream>
 #include <algorithm>
 #include "Vertex.h"
 #include <vector>
+#include <stdexcept>
 
 
 class Graph{
 private:
     std::vector<Vertex> vertexes;
+
+
+private:
     Vertex* s = nullptr;
     Vertex* t = nullptr;
 
@@ -31,7 +31,10 @@ public:
         this->t = &this->vertexes[copyFrom.t->getId() -1];
 
     }
+
     void makeEmptyGraph(int numOfVertexes);
+
+    std::vector<Vertex> &getVertexes() ;
 
     std::list<int> getAdjList(int vertexId);
 
@@ -53,7 +56,9 @@ public:
 
     Edge* getEdge(int src, int dest);
 
-    void printGraph();
+    void printGraph();//test func
+
+    void validateInput(int numOfVertexes, int numOfEdges, int sId, int tId);
 
     void buildGraph();
 

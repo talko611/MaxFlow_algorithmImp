@@ -1,6 +1,3 @@
-//
-// Created by Tal Koren on 22/08/2022.
-//
 #include "Vertex.h"
 
 

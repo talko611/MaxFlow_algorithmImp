@@ -1,7 +1,3 @@
-//
-// Created by Tal Koren on 22/08/2022.
-//
-
 #include <iostream>
 #include "Graph.h"
 #include "MaxFlowAlgorithms.h"
@@ -10,7 +6,12 @@ void printResult(FordFulkersonAnswer& answer ,  std::string&& type);
 
 int main(){
     Graph g = Graph();
-    g.buildGraph();
+    try{
+        g.buildGraph();
+    }catch (std::invalid_argument& e){
+        std::cout << e.what();
+        exit(0);
+    }
     FordFulkersonAnswer answer1 = MaxFlowAlgorithms::fordFulkersonWithBfs(g);
     printResult(answer1, "BFS");
     std::cout<<std::endl;
@@ -35,11 +36,9 @@ void printResult(FordFulkersonAnswer& answer ,  std::string&& type){
     size = answer.getRight().size();
     for(int i = 0; i < size; ++i){
         if(i == size -1){
-            std::cout << answer.getRight()[i] << ".";
+            std::cout << answer.getRight()[i];
         } else{
             std::cout << answer.getRight()[i] << ", ";
         }
     }
 }
-
-

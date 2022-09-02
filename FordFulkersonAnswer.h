@@ -1,7 +1,3 @@
-//
-// Created by Tal Koren on 24/08/2022.
-//
-
 #pragma once
 #include <vector>
 
@@ -24,4 +20,3 @@ public:
 
     void setMaxFlow(int maxFlow){this->maxFlow = maxFlow;}
 };
-
